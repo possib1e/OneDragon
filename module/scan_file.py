@@ -29,6 +29,7 @@ def read_file(filepath):
 
 def start_ffuf(project):
     os.chdir('./ffuf')
+    os.system("mkdir output")
     os.system("rm -rf output/" + project)
     os.system("mkdir output/" + project)
     urls = read_file('../output/'+project+'/all_urls.txt')
