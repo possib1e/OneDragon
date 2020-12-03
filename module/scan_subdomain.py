@@ -11,8 +11,9 @@ def start_oneforall(filename):
 
 def get_ip_url_from_oneforall(filename):
     os.system("cat OneForAll/results/*.txt | massdns/bin/massdns --output S -q -r massdns/lists/resolvers.txt > output/"+ filename +"/final-domains-ips.txt")
-    os.system("cat output/"+ filename +"/final-domains-ips.txt | cut -d " " -f1 |rev |cut -c 2- |rev |sort -u > output/"+ filename +"/sub_urls.txt")
-    os.system("cat output/"+ filename+"/final-domains-ips.txt | grep -E -o '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' |sort -u > output/"+filename+"/final-ips.txt")
+    os.system("sleep 1")
+    os.system("cat output/"+ filename + "/final-domains-ips.txt | cut -d " " -f1 |rev |cut -c 2- |rev |sort -u > output/"+ filename +"/sub_urls.txt")
+    os.system("cat output/"+ filename + "/final-domains-ips.txt | grep -E -o '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' |sort -u > output/"+filename+"/final-ips.txt")
     pass
 
 def get_ips_urls_from_oneforall(target):
