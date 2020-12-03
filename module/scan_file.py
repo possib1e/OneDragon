@@ -1,6 +1,5 @@
 import os,time,csv
 import pandas as pd
-#project = sys.argv[1]
 
 def redup_ffuf(project):
     l = list()
@@ -27,20 +26,20 @@ def read_file(filepath):
         data = f.read().splitlines()
         return data
 
-def start_ffuf(project):
+def start_ffuf(filename):
     os.chdir('./ffuf')
     os.system("mkdir output")
-    os.system("rm -rf output/" + project)
-    os.system("mkdir output/" + project)
-    urls = read_file('../output/'+project+'/all_urls.txt')
+    os.system("rm -rf output/" + filename)
+    os.system("mkdir output/" + filename)
+    urls = read_file('../output/'+filename+'/all_urls.txt')
 
     for url in urls:
-        cmd = "ffuf -w /root/tools/OneDragon/ffuf/dict/content-dirsearch-0.6w.txt -u " + url + "/FUZZ -ac -o output/"+ project + "/"+str(int(time.time()))+".csv -of csv"
+        cmd = "ffuf -w /root/tools/OneDragon/ffuf/dict/content-dirsearch-0.6w.txt -u " + url + "/FUZZ -ac -o output/"+ filename + "/"+str(int(time.time()))+".csv -of csv"
         print(cmd)
         os.system(cmd)
 
-    sum_ffuf(project)
-    redup_ffuf(project)
+    sum_ffuf(filename)
+    redup_ffuf(filename)
     os.chdir('../')
 def main():
     pass
