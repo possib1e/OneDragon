@@ -6,4 +6,4 @@ def read_file(filename):
 
 def rm_output_file(filename):
     os.system("rm -rf output/" + filename)
-    os.system("mkdir " + filename)
+    os.system("mkdir output/" + filename)
