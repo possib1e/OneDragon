@@ -1,5 +1,5 @@
 import os
-from common import read_file
+from .common import read_file
 
 def start_xray_scan(filename):
     os.chdir('./xray')
