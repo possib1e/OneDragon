@@ -10,7 +10,7 @@ if __name__ == '__main__':
     filename = sys.argv[1]
     rm_output_file(filename)
 
-    start_oneforall(filename)
+    #start_oneforall(filename)
     start_masscan_to_nmap(filename)
     start_ffuf(filename)
     start_xray_scan(filename)

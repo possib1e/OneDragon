@@ -34,7 +34,7 @@ def start_ffuf(filename):
     urls = read_file('../output/'+filename+'/all_urls.txt')
 
     for url in urls:
-        cmd = "ffuf -w /root/tools/OneDragon/ffuf/dict/test-100.txt -u " + url + "/FUZZ -ac -o output/"+ filename + "/"+str(int(time.time()))+".csv -of csv"
+        cmd = "ffuf -w /root/tools/OneDragon/ffuf/dict/content-dirsearch-0.6w.txt -u " + url + "/FUZZ -ac -o output/"+ filename + "/"+str(int(time.time()))+".csv -of csv"
         print(cmd)
         os.system(cmd)
 
