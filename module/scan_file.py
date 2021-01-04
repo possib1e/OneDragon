@@ -31,10 +31,10 @@ def start_ffuf(filename):
     os.system("mkdir output")
     os.system("rm -rf output/" + filename)
     os.system("mkdir output/" + filename)
-    urls = read_file('../output/'+filename+'/all_urls.txt')
+    urls = read_file('../output/'+filename+'/urls_all.txt')
 
     for url in urls:
-        cmd = "ffuf -w /root/tools/OneDragon/ffuf/dict/content-dirsearch-0.6w.txt -u " + url + "/FUZZ -ac -o output/"+ filename + "/"+str(int(time.time()))+".csv -of csv"
+        cmd = "timeout 60s ffuf -w /root/tools/OneDragon/ffuf/dict/content-dirsearch-0.6w.txt -u " + url + "/FUZZ -ac -mc 200 -maxtime 120 -o output/"+ filename + "/"+str(int(time.time()))+".csv -of csv"
         print(cmd)
         os.system(cmd)
 
