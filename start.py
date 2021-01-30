@@ -1,5 +1,5 @@
 import sys
-from module.scan_subdomain import start_oneforall
+from module.scan_subdomain import start_oneforall,start_massdns
 from module.scan_port import start_masscan_to_nmap
 from module.scan_file import start_ffuf
 from module.scan_vuln import start_xray_scan
@@ -13,6 +13,7 @@ if __name__ == '__main__':
     #输入target.txt
     #输出output/target.txt/下的 final-domains-ips.txt urls_sub.txt ips_all.txt
     start_oneforall(filename)
+    start_massdns(filename)
 
     #输入output/target.txt下的 ips_all.txt urls_sub.txt
     #输出output/target.txt下的 ip_port_scan_results.txt urls_ip.txt urls_all.txt

@@ -3,6 +3,7 @@ import os
 def start_masscan_to_nmap(filename):
     os.chdir('./masscan_to_nmap')
     os.system("/bin/cp -rf ../output/" + filename + "/ips_all.txt ip.txt")
+    os.system("rm masscan.json")
     os.system("rm web.txt")
     os.system("rm results.txt")
 
