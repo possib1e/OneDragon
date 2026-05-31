@@ -1,5 +1,6 @@
 ## 2026.5.31
 仅限授权测试/白帽研究/教学使用
+
 Roadmap：v0.2 计划：Docker 化、配置文件、模块化、日志、结果报告。
 
 ## 2020.12.02 项目介绍
@@ -36,3 +37,9 @@ https://github.com/ffuf/ffuf
 4.使用awvs爬虫和xray进行漏洞的扫描
 
 https://github.com/chaitin/xray
+
+## License
+
+This project is licensed under the MIT License.
+
+本项目基于 MIT License 开源。
