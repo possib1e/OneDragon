@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-02
+
+- Added a project status section to clarify the current maintenance focus.
+- Expanded the roadmap with third-party tool directory cleanup.
+- Documented the recommendation to validate external scanner settings in an isolated authorized test environment.
+
 ## 2026-06-01
 
 - Reworked README structure for clearer setup, scope, outputs, and roadmap.
