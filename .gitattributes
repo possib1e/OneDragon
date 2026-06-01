@@ -1,0 +1,10 @@
+# Preserve checked-in line endings for this legacy tool bundle.
+* -text
+
+# Keep binary assets out of textual diffs.
+*.7z binary
+*.db binary
+*.dll binary
+*.exe binary
+*.png binary
+*.zip binary
