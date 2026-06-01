@@ -1,0 +1,27 @@
+# Runtime output
+output/
+ffuf/output/
+xray/output/
+xray/log.xray.log
+
+# Generated scan artifacts
+OneForAll/results/
+masscan_to_nmap/ip.txt
+masscan_to_nmap/masscan.json
+masscan_to_nmap/results.txt
+masscan_to_nmap/web.txt
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

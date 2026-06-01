@@ -1,9 +1,17 @@
-import os
+import shutil
+from pathlib import Path
+
+
+OUTPUT_ROOT = Path("output")
+
+
 def read_file(filename):
-    with open(filename,'r') as f:
-        data = f.read().splitlines()
-        return data
+    with open(filename, "r", encoding="utf-8") as f:
+        return f.read().splitlines()
+
 
 def rm_output_file(filename):
-    os.system("rm -rf output/" + filename)
-    os.system("mkdir output/" + filename)
+    output_dir = OUTPUT_ROOT / Path(filename).name
+    if output_dir.exists():
+        shutil.rmtree(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
