@@ -1,8 +1,8 @@
 import shutil
-from pathlib import Path
+import os
 
 
-OUTPUT_ROOT = Path("output")
+OUTPUT_ROOT = "output"
 
 
 def read_file(filename):
@@ -11,7 +11,8 @@ def read_file(filename):
 
 
 def rm_output_file(filename):
-    output_dir = OUTPUT_ROOT / Path(filename).name
-    if output_dir.exists():
+    output_dir = os.path.join(OUTPUT_ROOT, os.path.basename(filename))
+    if os.path.exists(output_dir):
         shutil.rmtree(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)

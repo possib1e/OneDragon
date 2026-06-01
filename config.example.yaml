@@ -1,0 +1,22 @@
+# Example configuration for future OneDragon releases.
+# The current legacy workflow still uses several hard-coded paths; this file
+# documents the intended configuration surface for the next refactor.
+
+scope:
+  targets_file: targets.txt
+  authorized_only: true
+
+paths:
+  output_root: output
+  oneforall_root: OneForAll
+  ffuf_wordlist: ffuf/dict/content-dirsearch-0.6w.txt
+  massdns_resolvers: massdns/lists/resolvers.txt
+
+scan:
+  ffuf_timeout_seconds: 60
+  ffuf_max_time_seconds: 120
+  massdns_wildcard_threshold: 1000
+
+reports:
+  keep_raw_outputs: true
+  generate_summary: false
