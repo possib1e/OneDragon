@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-03
+
+- Added a lightweight GitHub Actions workflow for Python syntax checks and CLI help output.
+- Updated the maintenance roadmap to mark CI syntax checks as a near-term maintenance track.
+- Kept the CI workflow scanner-safe by avoiding any target execution.
+
 ## 2026-06-02
 
 - Added installation, configuration, and roadmap documentation.
