@@ -20,6 +20,8 @@ The workflow expects these tools or directories to be available:
 - xray under `xray/`
 - AWVS crawler integration under `xray/awvs/`
 
+See `docs/tooling.md` for the distinction between bundled tools, examples, and generated runtime artifacts.
+
 ## Recommended Setup Flow
 
 1. Clone the repository in an isolated environment.

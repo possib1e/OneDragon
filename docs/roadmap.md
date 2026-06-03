@@ -7,6 +7,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 - Document installation requirements and scanner assumptions.
 - Add configuration examples for paths, timeouts, and output directories.
 - Keep generated scan outputs out of version control.
+- Document bundled tool directories and generated runtime artifacts.
 - Improve CLI help and target-file validation.
 - Create focused issues for Docker support, config loading, CI, and report generation.
 - Add a lightweight CI workflow that checks syntax and CLI help without running scanners.
