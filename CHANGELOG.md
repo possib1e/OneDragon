@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-04
+
+- Added a lightweight config validation module for the planned `--config` workflow.
+- Added `--config` CLI parsing while keeping legacy scanner defaults unchanged.
+- Extended CI to check config option parsing with `config.example.yaml`.
+- Updated configuration docs and roadmap with the staged config migration status.
+
 ## 2026-06-03
 
 - Added `docs/tooling.md` to separate bundled tools, configuration examples, runtime inputs, and generated artifacts.

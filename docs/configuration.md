@@ -20,8 +20,18 @@ The current workflow still contains legacy hard-coded command paths. `config.exa
 
 ## Migration Plan
 
-1. Introduce a config loader with validation.
+1. Introduce a config loader with validation. Done: `--config` now validates that the file exists in the project root and contains the expected top-level sections.
 2. Move hard-coded scanner paths into `config.example.yaml`.
 3. Keep legacy defaults for backward compatibility.
-4. Add a `--config` CLI option after the defaults are covered by tests.
+4. Wire validated config values into scanner wrappers after the legacy defaults are covered by tests.
 5. Document each option in this file as it becomes active.
+
+## Current CLI Support
+
+`--config` is available as a validation hook:
+
+```bash
+python3 start.py --config config.example.yaml targets.txt
+```
+
+At this stage the option validates the file shape but does not change scanner behavior. This keeps the legacy workflow stable while configuration support is introduced incrementally.

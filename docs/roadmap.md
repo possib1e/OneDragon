@@ -6,6 +6,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 
 - Document installation requirements and scanner assumptions.
 - Add configuration examples for paths, timeouts, and output directories.
+- Add a config validation hook before wiring config values into scanner wrappers.
 - Keep generated scan outputs out of version control.
 - Document bundled tool directories and generated runtime artifacts.
 - Improve CLI help and target-file validation.
@@ -14,7 +15,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 
 ## Medium Term
 
-- Add a config loader and a `--config` CLI option.
+- Wire validated config values into scanner wrappers.
 - Split scanner wrappers into smaller modules with testable boundaries.
 - Replace shell string concatenation with safer subprocess calls.
 - Extend CI from syntax checks to basic linting.

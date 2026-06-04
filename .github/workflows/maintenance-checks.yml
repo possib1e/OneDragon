@@ -27,3 +27,6 @@ jobs:
 
       - name: Check CLI help
         run: python start.py --help
+
+      - name: Check config option parsing
+        run: python start.py --config config.example.yaml --help

@@ -2,6 +2,7 @@
 import argparse
 import os
 import sys
+from module.config import load_config
 from module.common import rm_output_file
 #python3 start.py targets.txt
 
@@ -13,6 +14,11 @@ def parse_args():
     parser.add_argument(
         "targets_file",
         help="Project-root file containing one authorized root domain per line.",
+    )
+    parser.add_argument(
+        "--config",
+        default=None,
+        help="Optional project-root config file to validate before running.",
     )
     return parser.parse_args()
 
@@ -34,6 +40,12 @@ if __name__ == '__main__':
         sys.exit(1)
 
     validate_target_file(filename)
+    try:
+        load_config(args.config)
+    except ValueError as error:
+        print("Error: {}".format(error))
+        sys.exit(1)
+
     rm_output_file(filename)
 
     from module.scan_file import start_ffuf
