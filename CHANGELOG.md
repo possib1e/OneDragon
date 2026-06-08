@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-08
+
+- Added unit tests for config validation behavior.
+- Extended GitHub Actions to run `python -m unittest discover -s tests`.
+- Documented config validation test coverage and updated the maintenance roadmap.
+
 ## 2026-06-04
 
 - Added a lightweight config validation module for the planned `--config` workflow.

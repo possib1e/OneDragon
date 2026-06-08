@@ -30,3 +30,6 @@ jobs:
 
       - name: Check config option parsing
         run: python start.py --config config.example.yaml --help
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests
