@@ -7,12 +7,13 @@ from module.common import rm_output_file
 #python3 start.py targets.txt
 
 
-def parse_args():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(
         description="Run the OneDragon authorized security testing workflow."
     )
     parser.add_argument(
         "targets_file",
+        nargs="?",
         help="Project-root file containing one authorized root domain per line.",
     )
     parser.add_argument(
@@ -20,31 +21,50 @@ def parse_args():
         default=None,
         help="Optional project-root config file to validate before running.",
     )
-    return parser.parse_args()
+    parser.add_argument(
+        "--check-config",
+        action="store_true",
+        help="Validate the config file and exit without running scanners.",
+    )
+    return parser.parse_args(argv)
 
 
 def validate_target_file(filename):
     if os.path.basename(filename) != filename:
-        print("Error: targets file must be in the project root directory.")
-        sys.exit(1)
+        raise ValueError("targets file must be in the project root directory")
     if not os.path.isfile(filename):
-        print("Error: targets file not found: {}".format(filename))
-        sys.exit(1)
+        raise ValueError("targets file not found: {}".format(filename))
 
 
-if __name__ == '__main__':
-    args = parse_args()
-    filename = args.targets_file
-    if not filename.strip():
-        print("Error: targets file is required.")
-        sys.exit(1)
-
-    validate_target_file(filename)
+def main(argv=None):
+    args = parse_args(argv)
     try:
-        load_config(args.config)
+        config = load_config(args.config)
     except ValueError as error:
         print("Error: {}".format(error))
-        sys.exit(1)
+        return 1
+
+    if args.check_config:
+        if not args.config:
+            print("Error: --check-config requires --config.")
+            return 1
+        print(
+            "Config OK: {} ({})".format(
+                config["path"], ", ".join(config["sections"])
+            )
+        )
+        return 0
+
+    filename = args.targets_file
+    if not filename or not filename.strip():
+        print("Error: targets file is required.")
+        return 1
+
+    try:
+        validate_target_file(filename)
+    except ValueError as error:
+        print("Error: {}".format(error))
+        return 1
 
     rm_output_file(filename)
 
@@ -69,3 +89,9 @@ if __name__ == '__main__':
     # 输入output/target.txt下的 urls_all.txt
     # 输出xary下的扫描报告
     start_xray_scan(filename)
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

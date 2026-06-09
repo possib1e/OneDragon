@@ -36,6 +36,12 @@ python3 start.py --config config.example.yaml targets.txt
 
 At this stage the option validates the file shape but does not change scanner behavior. This keeps the legacy workflow stable while configuration support is introduced incrementally.
 
+To validate configuration without launching scanners, use:
+
+```bash
+python3 start.py --config config.example.yaml --check-config
+```
+
 ## Test Coverage
 
-Config validation is covered by `tests/test_config.py`. The tests check the example config, missing files, path restrictions, and missing required sections.
+Config validation is covered by `tests/test_config.py` and CLI behavior is covered by `tests/test_start_cli.py`. The tests check the example config, missing files, path restrictions, missing required sections, and the scanner-safe `--check-config` mode.

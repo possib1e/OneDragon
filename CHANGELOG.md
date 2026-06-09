@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-09
+
+- Added scanner-safe `--check-config` mode for validating config files without launching scanners.
+- Refactored `start.py` into a testable `main(argv=None)` entrypoint.
+- Added CLI tests for config checking and missing target-file handling.
+- Updated CI and configuration docs to use `--check-config`.
+
 ## 2026-06-08
 
 - Added unit tests for config validation behavior.
