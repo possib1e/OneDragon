@@ -24,6 +24,14 @@ class ConfigLoaderTest(unittest.TestCase):
         self.assertEqual(result["path"], "config.example.yaml")
         self.assertEqual(result["sections"], ["paths", "reports", "scan", "scope"])
 
+    def test_example_config_loads_nested_values(self):
+        result = load_config("config.example.yaml")
+
+        self.assertEqual(result["values"]["paths"]["output_root"], "output")
+        self.assertEqual(result["values"]["scope"]["authorized_only"], True)
+        self.assertEqual(result["values"]["scan"]["ffuf_timeout_seconds"], 60)
+        self.assertEqual(result["values"]["reports"]["generate_summary"], False)
+
     def test_missing_config_file_raises_error(self):
         with self.assertRaises(ValueError) as error:
             load_config("missing-config.yaml")

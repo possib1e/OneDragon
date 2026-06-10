@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-10
+
+- Extended config loading to parse one level of key/value settings from `config.example.yaml`.
+- Added tests for parsed path, boolean, and integer config values.
+- Updated configuration docs and roadmap for the staged parser support.
+
 ## 2026-06-09
 
 - Added scanner-safe `--check-config` mode for validating config files without launching scanners.

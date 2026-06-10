@@ -5,6 +5,16 @@ import os
 REQUIRED_SECTIONS = ("scope", "paths", "scan", "reports")
 
 
+def _coerce_value(value):
+    if value in ("true", "True"):
+        return True
+    if value in ("false", "False"):
+        return False
+    if value.isdigit():
+        return int(value)
+    return value.strip("\"'")
+
+
 def load_config(config_path):
     if not config_path:
         return None
@@ -13,14 +23,24 @@ def load_config(config_path):
     if not os.path.isfile(config_path):
         raise ValueError("config file not found: {}".format(config_path))
 
+    current_section = None
     sections = set()
+    values = {}
     with open(config_path, "r") as config_file:
         for line in config_file:
             stripped = line.strip()
             if not stripped or stripped.startswith("#"):
                 continue
             if not line.startswith(" ") and stripped.endswith(":"):
-                sections.add(stripped[:-1])
+                current_section = stripped[:-1]
+                sections.add(current_section)
+                values.setdefault(current_section, {})
+                continue
+            if current_section and line.startswith(" ") and ":" in stripped:
+                key, raw_value = stripped.split(":", 1)
+                values[current_section][key.strip()] = _coerce_value(
+                    raw_value.strip()
+                )
 
     missing = [section for section in REQUIRED_SECTIONS if section not in sections]
     if missing:
@@ -30,4 +50,4 @@ def load_config(config_path):
             )
         )
 
-    return {"path": config_path, "sections": sorted(sections)}
+    return {"path": config_path, "sections": sorted(sections), "values": values}
