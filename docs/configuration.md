@@ -38,6 +38,8 @@ At this stage the option validates the file shape but does not change scanner be
 
 The loader now parses one level of key/value settings from each required section. It supports the simple scalar values currently used by `config.example.yaml`, including strings, integers, and booleans.
 
+Scanner wrappers should read parsed settings through `get_config_value()` or `require_config_value()` instead of indexing nested dictionaries directly. This keeps defaults explicit and makes missing required settings easier to diagnose.
+
 To validate configuration without launching scanners, use:
 
 ```bash
@@ -46,4 +48,4 @@ python3 start.py --config config.example.yaml --check-config
 
 ## Test Coverage
 
-Config validation is covered by `tests/test_config.py` and CLI behavior is covered by `tests/test_start_cli.py`. The tests check the example config, parsed nested values, missing files, path restrictions, missing required sections, and the scanner-safe `--check-config` mode.
+Config validation is covered by `tests/test_config.py` and CLI behavior is covered by `tests/test_start_cli.py`. The tests check the example config, parsed nested values, safe value access helpers, missing files, path restrictions, missing required sections, and the scanner-safe `--check-config` mode.

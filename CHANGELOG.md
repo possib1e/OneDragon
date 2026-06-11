@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-11
+
+- Added safe config value access helpers for optional and required settings.
+- Added tests for defaults, missing values, and required config value errors.
+- Updated configuration docs and roadmap for the scanner wrapper migration path.
+
 ## 2026-06-10
 
 - Extended config loading to parse one level of key/value settings from `config.example.yaml`.

@@ -2,7 +2,7 @@
 import os
 import unittest
 
-from module.config import load_config
+from module.config import get_config_value, load_config, require_config_value
 
 
 class ConfigLoaderTest(unittest.TestCase):
@@ -31,6 +31,33 @@ class ConfigLoaderTest(unittest.TestCase):
         self.assertEqual(result["values"]["scope"]["authorized_only"], True)
         self.assertEqual(result["values"]["scan"]["ffuf_timeout_seconds"], 60)
         self.assertEqual(result["values"]["reports"]["generate_summary"], False)
+
+    def test_get_config_value_returns_existing_value(self):
+        result = load_config("config.example.yaml")
+
+        self.assertEqual(get_config_value(result, "paths", "output_root"), "output")
+
+    def test_get_config_value_returns_default_for_missing_value(self):
+        result = load_config("config.example.yaml")
+
+        self.assertEqual(
+            get_config_value(result, "paths", "missing_key", default="fallback"),
+            "fallback",
+        )
+
+    def test_get_config_value_returns_default_for_empty_config(self):
+        self.assertEqual(
+            get_config_value(None, "paths", "output_root", default="output"),
+            "output",
+        )
+
+    def test_require_config_value_raises_for_missing_value(self):
+        result = load_config("config.example.yaml")
+
+        with self.assertRaises(ValueError) as error:
+            require_config_value(result, "paths", "missing_key")
+
+        self.assertIn("paths.missing_key", str(error.exception))
 
     def test_missing_config_file_raises_error(self):
         with self.assertRaises(ValueError) as error:

@@ -3,6 +3,7 @@ import os
 
 
 REQUIRED_SECTIONS = ("scope", "paths", "scan", "reports")
+MISSING = object()
 
 
 def _coerce_value(value):
@@ -51,3 +52,16 @@ def load_config(config_path):
         )
 
     return {"path": config_path, "sections": sorted(sections), "values": values}
+
+
+def get_config_value(config, section, key, default=None):
+    if not config:
+        return default
+    return config.get("values", {}).get(section, {}).get(key, default)
+
+
+def require_config_value(config, section, key):
+    value = get_config_value(config, section, key, MISSING)
+    if value is MISSING:
+        raise ValueError("missing config value: {}.{}".format(section, key))
+    return value
