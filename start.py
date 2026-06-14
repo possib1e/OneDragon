@@ -2,7 +2,7 @@
 import argparse
 import os
 import sys
-from module.config import load_config
+from module.config import load_config, summarize_config
 from module.common import rm_output_file
 #python3 start.py targets.txt
 
@@ -53,6 +53,8 @@ def main(argv=None):
                 config["path"], ", ".join(config["sections"])
             )
         )
+        for line in summarize_config(config):
+            print("  {}".format(line))
         return 0
 
     filename = args.targets_file

@@ -4,6 +4,14 @@ import os
 
 REQUIRED_SECTIONS = ("scope", "paths", "scan", "reports")
 MISSING = object()
+SUMMARY_KEYS = (
+    ("scope", "targets_file"),
+    ("paths", "output_root"),
+    ("paths", "ffuf_wordlist"),
+    ("scan", "ffuf_timeout_seconds"),
+    ("scan", "massdns_wildcard_threshold"),
+    ("reports", "generate_summary"),
+)
 
 
 def _coerce_value(value):
@@ -65,3 +73,12 @@ def require_config_value(config, section, key):
     if value is MISSING:
         raise ValueError("missing config value: {}.{}".format(section, key))
     return value
+
+
+def summarize_config(config):
+    lines = []
+    for section, key in SUMMARY_KEYS:
+        value = get_config_value(config, section, key, MISSING)
+        if value is not MISSING:
+            lines.append("{}.{}={}".format(section, key, value))
+    return lines

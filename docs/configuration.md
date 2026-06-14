@@ -46,6 +46,8 @@ To validate configuration without launching scanners, use:
 python3 start.py --config config.example.yaml --check-config
 ```
 
+The check prints a short summary of key parsed values so maintainers can confirm path, timeout, threshold, and report settings before wiring them into scanner wrappers.
+
 ## Test Coverage
 
-Config validation is covered by `tests/test_config.py` and CLI behavior is covered by `tests/test_start_cli.py`. The tests check the example config, parsed nested values, safe value access helpers, missing files, path restrictions, missing required sections, and the scanner-safe `--check-config` mode.
+Config validation is covered by `tests/test_config.py` and CLI behavior is covered by `tests/test_start_cli.py`. The tests check the example config, parsed nested values, safe value access helpers, config summary output, missing files, path restrictions, missing required sections, and the scanner-safe `--check-config` mode.

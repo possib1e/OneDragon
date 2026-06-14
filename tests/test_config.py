@@ -2,7 +2,12 @@
 import os
 import unittest
 
-from module.config import get_config_value, load_config, require_config_value
+from module.config import (
+    get_config_value,
+    load_config,
+    require_config_value,
+    summarize_config,
+)
 
 
 class ConfigLoaderTest(unittest.TestCase):
@@ -58,6 +63,16 @@ class ConfigLoaderTest(unittest.TestCase):
             require_config_value(result, "paths", "missing_key")
 
         self.assertIn("paths.missing_key", str(error.exception))
+
+    def test_summarize_config_returns_stable_key_lines(self):
+        result = load_config("config.example.yaml")
+
+        summary = summarize_config(result)
+
+        self.assertIn("scope.targets_file=targets.txt", summary)
+        self.assertIn("paths.output_root=output", summary)
+        self.assertIn("scan.ffuf_timeout_seconds=60", summary)
+        self.assertIn("reports.generate_summary=False", summary)
 
     def test_missing_config_file_raises_error(self):
         with self.assertRaises(ValueError) as error:

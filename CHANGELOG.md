@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-14
+
+- Added scanner-safe config summary output for `--check-config`.
+- Added deterministic summary helper and tests for key parsed config values.
+- Updated configuration docs and roadmap with the pre-flight config summary step.
+
 ## 2026-06-11
 
 - Added safe config value access helpers for optional and required settings.

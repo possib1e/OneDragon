@@ -27,6 +27,7 @@ class StartCliTest(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("Config OK", output)
         self.assertIn("config.example.yaml", output)
+        self.assertIn("paths.output_root=output", output)
 
     def test_check_config_requires_config_argument(self):
         code, output = self.run_main(["--check-config"])
