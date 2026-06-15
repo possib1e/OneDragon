@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-15
+
+- Added explicit validation for supported config sections and keys.
+- Added tests for unsupported config sections and unsupported key errors.
+- Updated configuration docs and roadmap to describe the constrained config surface.
+
 ## 2026-06-14
 
 - Added scanner-safe config summary output for `--check-config`.

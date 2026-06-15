@@ -40,6 +40,8 @@ The loader now parses one level of key/value settings from each required section
 
 Scanner wrappers should read parsed settings through `get_config_value()` or `require_config_value()` instead of indexing nested dictionaries directly. This keeps defaults explicit and makes missing required settings easier to diagnose.
 
+The loader rejects unsupported sections and keys. This keeps the staged configuration surface small while scanner wrappers are migrated gradually.
+
 To validate configuration without launching scanners, use:
 
 ```bash
@@ -50,4 +52,4 @@ The check prints a short summary of key parsed values so maintainers can confirm
 
 ## Test Coverage
 
-Config validation is covered by `tests/test_config.py` and CLI behavior is covered by `tests/test_start_cli.py`. The tests check the example config, parsed nested values, safe value access helpers, config summary output, missing files, path restrictions, missing required sections, and the scanner-safe `--check-config` mode.
+Config validation is covered by `tests/test_config.py` and CLI behavior is covered by `tests/test_start_cli.py`. The tests check the example config, parsed nested values, safe value access helpers, config summary output, missing files, path restrictions, missing required sections, unsupported sections and keys, and the scanner-safe `--check-config` mode.

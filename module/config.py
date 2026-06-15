@@ -3,6 +3,21 @@ import os
 
 
 REQUIRED_SECTIONS = ("scope", "paths", "scan", "reports")
+SUPPORTED_KEYS = {
+    "scope": ("targets_file", "authorized_only"),
+    "paths": (
+        "output_root",
+        "oneforall_root",
+        "ffuf_wordlist",
+        "massdns_resolvers",
+    ),
+    "scan": (
+        "ffuf_timeout_seconds",
+        "ffuf_max_time_seconds",
+        "massdns_wildcard_threshold",
+    ),
+    "reports": ("keep_raw_outputs", "generate_summary"),
+}
 MISSING = object()
 SUMMARY_KEYS = (
     ("scope", "targets_file"),
@@ -42,14 +57,23 @@ def load_config(config_path):
                 continue
             if not line.startswith(" ") and stripped.endswith(":"):
                 current_section = stripped[:-1]
+                if current_section not in SUPPORTED_KEYS:
+                    raise ValueError(
+                        "unsupported config section: {}".format(current_section)
+                    )
                 sections.add(current_section)
                 values.setdefault(current_section, {})
                 continue
             if current_section and line.startswith(" ") and ":" in stripped:
                 key, raw_value = stripped.split(":", 1)
-                values[current_section][key.strip()] = _coerce_value(
-                    raw_value.strip()
-                )
+                key = key.strip()
+                if key not in SUPPORTED_KEYS[current_section]:
+                    raise ValueError(
+                        "unsupported config value: {}.{}".format(
+                            current_section, key
+                        )
+                    )
+                values[current_section][key] = _coerce_value(raw_value.strip())
 
     missing = [section for section in REQUIRED_SECTIONS if section not in sections]
     if missing:

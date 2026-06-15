@@ -12,7 +12,11 @@ from module.config import (
 
 class ConfigLoaderTest(unittest.TestCase):
     def tearDown(self):
-        for filename in ("tmp-valid-config.yaml", "tmp-invalid-config.yaml"):
+        for filename in (
+            "tmp-invalid-config.yaml",
+            "tmp-unsupported-key.yaml",
+            "tmp-unsupported-section.yaml",
+        ):
             if os.path.exists(filename):
                 os.remove(filename)
 
@@ -96,6 +100,37 @@ class ConfigLoaderTest(unittest.TestCase):
             load_config("tmp-invalid-config.yaml")
 
         self.assertIn("reports", str(error.exception))
+
+    def test_unsupported_section_raises_error(self):
+        self.write_config(
+            "tmp-unsupported-section.yaml",
+            "scope:\npaths:\nscan:\nreports:\nunknown:\n",
+        )
+
+        with self.assertRaises(ValueError) as error:
+            load_config("tmp-unsupported-section.yaml")
+
+        self.assertIn("unsupported config section", str(error.exception))
+        self.assertIn("unknown", str(error.exception))
+
+    def test_unsupported_key_raises_error(self):
+        self.write_config(
+            "tmp-unsupported-key.yaml",
+            "scope:\n"
+            "  targets_file: targets.txt\n"
+            "paths:\n"
+            "  output_root: output\n"
+            "scan:\n"
+            "  unknown_timeout: 30\n"
+            "reports:\n"
+            "  generate_summary: false\n",
+        )
+
+        with self.assertRaises(ValueError) as error:
+            load_config("tmp-unsupported-key.yaml")
+
+        self.assertIn("unsupported config value", str(error.exception))
+        self.assertIn("scan.unknown_timeout", str(error.exception))
 
 
 if __name__ == "__main__":
