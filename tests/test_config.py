@@ -4,6 +4,7 @@ import unittest
 
 from module.config import (
     get_config_value,
+    list_supported_config,
     load_config,
     require_config_value,
     summarize_config,
@@ -77,6 +78,13 @@ class ConfigLoaderTest(unittest.TestCase):
         self.assertIn("paths.output_root=output", summary)
         self.assertIn("scan.ffuf_timeout_seconds=60", summary)
         self.assertIn("reports.generate_summary=False", summary)
+
+    def test_list_supported_config_returns_sections_and_keys(self):
+        supported = list_supported_config()
+
+        self.assertIn("scope: targets_file, authorized_only", supported)
+        self.assertIn("paths: output_root, oneforall_root, ffuf_wordlist, massdns_resolvers", supported)
+        self.assertIn("reports: keep_raw_outputs, generate_summary", supported)
 
     def test_missing_config_file_raises_error(self):
         with self.assertRaises(ValueError) as error:

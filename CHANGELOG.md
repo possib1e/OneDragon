@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-16
+
+- Added supported config surface output to `--check-config`.
+- Added `list_supported_config()` and tests for supported section/key reporting.
+- Updated configuration docs and roadmap to keep supported config keys visible.
+
 ## 2026-06-15
 
 - Added explicit validation for supported config sections and keys.

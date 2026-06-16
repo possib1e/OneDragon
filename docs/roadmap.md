@@ -13,6 +13,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 - Add safe config value access helpers for scanner wrapper migration.
 - Print a scanner-safe config summary for maintainers.
 - Reject unsupported config sections and keys during validation.
+- Expose supported config sections and keys through the config check output.
 - Keep generated scan outputs out of version control.
 - Document bundled tool directories and generated runtime artifacts.
 - Improve CLI help and target-file validation.

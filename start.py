@@ -2,7 +2,7 @@
 import argparse
 import os
 import sys
-from module.config import load_config, summarize_config
+from module.config import list_supported_config, load_config, summarize_config
 from module.common import rm_output_file
 #python3 start.py targets.txt
 
@@ -54,6 +54,9 @@ def main(argv=None):
             )
         )
         for line in summarize_config(config):
+            print("  {}".format(line))
+        print("Supported config keys:")
+        for line in list_supported_config():
             print("  {}".format(line))
         return 0
 

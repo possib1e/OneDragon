@@ -106,3 +106,10 @@ def summarize_config(config):
         if value is not MISSING:
             lines.append("{}.{}={}".format(section, key, value))
     return lines
+
+
+def list_supported_config():
+    lines = []
+    for section in REQUIRED_SECTIONS:
+        lines.append("{}: {}".format(section, ", ".join(SUPPORTED_KEYS[section])))
+    return lines

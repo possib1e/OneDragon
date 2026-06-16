@@ -28,6 +28,8 @@ class StartCliTest(unittest.TestCase):
         self.assertIn("Config OK", output)
         self.assertIn("config.example.yaml", output)
         self.assertIn("paths.output_root=output", output)
+        self.assertIn("Supported config keys:", output)
+        self.assertIn("scope: targets_file, authorized_only", output)
 
     def test_check_config_requires_config_argument(self):
         code, output = self.run_main(["--check-config"])
