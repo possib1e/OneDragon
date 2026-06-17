@@ -20,3 +20,4 @@ scan:
 reports:
   keep_raw_outputs: true
   generate_summary: false
+  summary_filename: summary.txt

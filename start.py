@@ -2,7 +2,12 @@
 import argparse
 import os
 import sys
-from module.config import list_supported_config, load_config, summarize_config
+from module.config import (
+    get_config_value,
+    list_supported_config,
+    load_config,
+    summarize_config,
+)
 from module.common import rm_output_file
 #python3 start.py targets.txt
 
@@ -25,6 +30,16 @@ def parse_args(argv=None):
         "--check-config",
         action="store_true",
         help="Validate the config file and exit without running scanners.",
+    )
+    parser.add_argument(
+        "--summarize-output",
+        action="store_true",
+        help="Summarize existing output files and exit without running scanners.",
+    )
+    parser.add_argument(
+        "--write-summary",
+        action="store_true",
+        help="Write the output summary file when used with --summarize-output.",
     )
     return parser.parse_args(argv)
 
@@ -64,6 +79,32 @@ def main(argv=None):
     if not filename or not filename.strip():
         print("Error: targets file is required.")
         return 1
+
+    if args.summarize_output:
+        output_root = get_config_value(config, "paths", "output_root", "output")
+        summary_filename = get_config_value(
+            config, "reports", "summary_filename", "summary.txt"
+        )
+        from module.report import (
+            collect_output_summary,
+            format_output_summary,
+            write_output_summary,
+        )
+
+        try:
+            summary = collect_output_summary(filename, output_root)
+            for line in format_output_summary(summary):
+                print(line)
+            if args.write_summary:
+                print(
+                    "Wrote summary: {}".format(
+                        write_output_summary(summary, summary_filename)
+                    )
+                )
+        except ValueError as error:
+            print("Error: {}".format(error))
+            return 1
+        return 0
 
     try:
         validate_target_file(filename)

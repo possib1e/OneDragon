@@ -2,6 +2,14 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-17
+
+- Added scanner-safe output summary reporting for existing result artifacts.
+- Added `--summarize-output` and `--write-summary` CLI options.
+- Added report module tests and CLI coverage for summary mode.
+- Added reporting documentation and linked it from README.
+- Added `reports.summary_filename` to `config.example.yaml`.
+
 ## 2026-06-16
 
 - Added supported config surface output to `--check-config`.

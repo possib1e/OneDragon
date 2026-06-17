@@ -43,6 +43,13 @@ class StartCliTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("targets file is required", output)
 
+    def test_summarize_output_reports_missing_output_without_scanning(self):
+        code, output = self.run_main(["--summarize-output", "missing-output.txt"])
+
+        self.assertEqual(code, 0)
+        self.assertIn("OneDragon output summary", output)
+        self.assertIn("output_exists=False", output)
+
 
 if __name__ == "__main__":
     unittest.main()

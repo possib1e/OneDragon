@@ -16,7 +16,7 @@ SUPPORTED_KEYS = {
         "ffuf_max_time_seconds",
         "massdns_wildcard_threshold",
     ),
-    "reports": ("keep_raw_outputs", "generate_summary"),
+    "reports": ("keep_raw_outputs", "generate_summary", "summary_filename"),
 }
 MISSING = object()
 SUMMARY_KEYS = (
@@ -26,6 +26,7 @@ SUMMARY_KEYS = (
     ("scan", "ffuf_timeout_seconds"),
     ("scan", "massdns_wildcard_threshold"),
     ("reports", "generate_summary"),
+    ("reports", "summary_filename"),
 )
 
 

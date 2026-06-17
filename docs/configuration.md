@@ -52,6 +52,8 @@ The check prints a short summary of key parsed values so maintainers can confirm
 
 The same check also prints the supported config sections and keys. This keeps the accepted configuration surface visible without duplicating the list by hand in multiple documents.
 
+`reports.summary_filename` controls the filename used by `--summarize-output --write-summary`.
+
 ## Test Coverage
 
 Config validation is covered by `tests/test_config.py` and CLI behavior is covered by `tests/test_start_cli.py`. The tests check the example config, parsed nested values, safe value access helpers, config summary output, supported config surface output, missing files, path restrictions, missing required sections, unsupported sections and keys, and the scanner-safe `--check-config` mode.

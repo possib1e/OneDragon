@@ -32,7 +32,7 @@ OneDragon 是一个面向授权安全测试、白帽研究和教学场景的自�
    output/targets.txt/
    ```
 
-更多运行环境说明见 [Installation Notes](docs/installation.md)，配置整理计划见 [Configuration Notes](docs/configuration.md)，目录职责说明见 [Tooling and Artifact Layout](docs/tooling.md)。
+更多运行环境说明见 [Installation Notes](docs/installation.md)，配置整理计划见 [Configuration Notes](docs/configuration.md)，目录职责说明见 [Tooling and Artifact Layout](docs/tooling.md)，结果汇总说明见 [Reporting Notes](docs/reporting.md)。
 
 ## 输出文件
 
@@ -68,6 +68,8 @@ OneDragon 是一个面向授权安全测试、白帽研究和教学场景的自�
 ## 维护检查
 
 仓库包含一个轻量 GitHub Actions 工作流，用于检查 Python 语法和 CLI help 输出。该工作流不会执行扫描器，也不会访问任何目标资产。
+
+可以使用 `python3 start.py --summarize-output targets.txt` 汇总既有输出文件；该命令只读取本地结果，不启动扫描器。
 
 ## 历史说明
 
