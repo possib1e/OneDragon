@@ -41,6 +41,12 @@ def parse_args(argv=None):
         action="store_true",
         help="Write the output summary file when used with --summarize-output.",
     )
+    parser.add_argument(
+        "--summary-format",
+        choices=("text", "json"),
+        default="text",
+        help="Output format for --summarize-output.",
+    )
     return parser.parse_args(argv)
 
 
@@ -88,17 +94,23 @@ def main(argv=None):
         from module.report import (
             collect_output_summary,
             format_output_summary,
+            format_output_summary_json,
             write_output_summary,
         )
 
         try:
             summary = collect_output_summary(filename, output_root)
-            for line in format_output_summary(summary):
-                print(line)
+            if args.summary_format == "json":
+                print(format_output_summary_json(summary))
+            else:
+                for line in format_output_summary(summary):
+                    print(line)
             if args.write_summary:
                 print(
                     "Wrote summary: {}".format(
-                        write_output_summary(summary, summary_filename)
+                        write_output_summary(
+                            summary, summary_filename, args.summary_format
+                        )
                     )
                 )
         except ValueError as error:

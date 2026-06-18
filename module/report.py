@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import os
 
 
@@ -73,13 +74,20 @@ def format_output_summary(summary):
     return lines
 
 
-def write_output_summary(summary, filename="summary.txt"):
+def format_output_summary_json(summary):
+    return json.dumps(summary, indent=2, sort_keys=True)
+
+
+def write_output_summary(summary, filename="summary.txt", summary_format="text"):
     if not summary["output_exists"]:
         raise ValueError(
             "output directory does not exist: {}".format(summary["output_dir"])
         )
     summary_path = os.path.join(summary["output_dir"], filename)
     with open(summary_path, "w") as output_file:
-        output_file.write("\n".join(format_output_summary(summary)))
+        if summary_format == "json":
+            output_file.write(format_output_summary_json(summary))
+        else:
+            output_file.write("\n".join(format_output_summary(summary)))
         output_file.write("\n")
     return summary_path

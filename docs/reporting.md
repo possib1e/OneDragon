@@ -10,13 +10,21 @@ python3 start.py --summarize-output targets.txt
 
 The command reports whether each expected artifact exists and how many lines it contains.
 
+## JSON Output
+
+```bash
+python3 start.py --summarize-output targets.txt --summary-format json
+```
+
+Use JSON when another tool needs to consume the report.
+
 ## Write a Summary File
 
 ```bash
 python3 start.py --summarize-output targets.txt --write-summary
 ```
 
-By default this writes `summary.txt` under the matching output directory. The filename is controlled by `reports.summary_filename` in `config.example.yaml`.
+By default this writes `summary.txt` under the matching output directory. The filename is controlled by `reports.summary_filename` in `config.example.yaml`. The file content follows `--summary-format`.
 
 ## Expected Artifacts
 

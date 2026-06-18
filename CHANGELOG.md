@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-18
+
+- Added JSON output support for scanner-safe output summaries.
+- Added `--summary-format text|json` for `--summarize-output`.
+- Added report and CLI tests for parseable JSON summary output.
+- Updated reporting docs and roadmap for structured report support.
+
 ## 2026-06-17
 
 - Added scanner-safe output summary reporting for existing result artifacts.

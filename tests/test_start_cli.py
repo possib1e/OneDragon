@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import sys
 import unittest
 
@@ -49,6 +50,16 @@ class StartCliTest(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("OneDragon output summary", output)
         self.assertIn("output_exists=False", output)
+
+    def test_summarize_output_can_emit_json(self):
+        code, output = self.run_main(
+            ["--summarize-output", "missing-output.txt", "--summary-format", "json"]
+        )
+
+        self.assertEqual(code, 0)
+        parsed = json.loads(output)
+        self.assertEqual(parsed["project"], "missing-output.txt")
+        self.assertEqual(parsed["output_exists"], False)
 
 
 if __name__ == "__main__":

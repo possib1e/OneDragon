@@ -15,6 +15,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 - Reject unsupported config sections and keys during validation.
 - Expose supported config sections and keys through the config check output.
 - Add scanner-safe output summary reporting for existing artifacts.
+- Add JSON output for scanner-safe summaries.
 - Keep generated scan outputs out of version control.
 - Document bundled tool directories and generated runtime artifacts.
 - Improve CLI help and target-file validation.
@@ -31,6 +32,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 - Replace shell string concatenation with safer subprocess calls.
 - Extend CI from syntax checks to basic linting.
 - Expand summary reporting into structured report generation.
+- Add report totals for present artifacts, missing artifacts, and total lines.
 
 ## Release Goals
 

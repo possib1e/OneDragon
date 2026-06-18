@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import os
 import shutil
 import unittest
@@ -6,6 +7,7 @@ import unittest
 from module.report import (
     collect_output_summary,
     format_output_summary,
+    format_output_summary_json,
     write_output_summary,
 )
 
@@ -56,6 +58,24 @@ class OutputReportTest(unittest.TestCase):
         with open(summary_path, "r") as summary_file:
             content = summary_file.read()
         self.assertIn("OneDragon output summary", content)
+
+    def test_format_output_summary_json_returns_parseable_json(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        parsed = json.loads(format_output_summary_json(summary))
+
+        self.assertEqual(parsed["project"], "targets.txt")
+        self.assertEqual(parsed["output_root"], self.output_root)
+        self.assertEqual(len(parsed["artifacts"]), 8)
+
+    def test_write_output_summary_writes_json_summary_file(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        summary_path = write_output_summary(summary, "summary.json", "json")
+
+        with open(summary_path, "r") as summary_file:
+            parsed = json.loads(summary_file.read())
+        self.assertEqual(parsed["project"], "targets.txt")
 
     def test_collect_output_summary_rejects_nested_project_path(self):
         with self.assertRaises(ValueError) as error:
