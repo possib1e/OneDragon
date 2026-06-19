@@ -44,11 +44,19 @@ def collect_output_summary(project, output_root="output"):
             }
         )
 
+    present_artifacts = sum(1 for artifact in artifacts if artifact["exists"])
+    total_lines = sum(artifact["lines"] for artifact in artifacts)
+
     return {
         "project": project,
         "output_root": output_root,
         "output_dir": output_dir,
         "output_exists": os.path.isdir(output_dir),
+        "totals": {
+            "present_artifacts": present_artifacts,
+            "missing_artifacts": len(artifacts) - present_artifacts,
+            "total_lines": total_lines,
+        },
         "artifacts": artifacts,
     }
 
@@ -59,6 +67,9 @@ def format_output_summary(summary):
         "project={}".format(summary["project"]),
         "output_dir={}".format(summary["output_dir"]),
         "output_exists={}".format(summary["output_exists"]),
+        "present_artifacts={}".format(summary["totals"]["present_artifacts"]),
+        "missing_artifacts={}".format(summary["totals"]["missing_artifacts"]),
+        "total_lines={}".format(summary["totals"]["total_lines"]),
         "artifacts:",
     ]
     for artifact in summary["artifacts"]:

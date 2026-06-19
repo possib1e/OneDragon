@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-19
+
+- Added report totals for present artifacts, missing artifacts, and total lines.
+- Included totals in text and JSON summary output.
+- Added tests for collected, formatted, and JSON summary totals.
+- Updated reporting docs and roadmap for the totals step.
+
 ## 2026-06-18
 
 - Added JSON output support for scanner-safe output summaries.

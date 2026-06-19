@@ -8,7 +8,8 @@ OneDragon includes a scanner-safe output summary command. It reads existing file
 python3 start.py --summarize-output targets.txt
 ```
 
-The command reports whether each expected artifact exists and how many lines it contains.
+The command reports whether each expected artifact exists, how many lines it
+contains, and totals for present artifacts, missing artifacts, and output lines.
 
 ## JSON Output
 
@@ -16,7 +17,8 @@ The command reports whether each expected artifact exists and how many lines it 
 python3 start.py --summarize-output targets.txt --summary-format json
 ```
 
-Use JSON when another tool needs to consume the report.
+Use JSON when another tool needs to consume the report. The JSON payload includes
+the same artifact entries and totals as the text output.
 
 ## Write a Summary File
 

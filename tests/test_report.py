@@ -35,6 +35,9 @@ class OutputReportTest(unittest.TestCase):
 
         artifacts = dict((item["name"], item) for item in summary["artifacts"])
         self.assertEqual(summary["output_dir"], self.output_dir)
+        self.assertEqual(summary["totals"]["present_artifacts"], 2)
+        self.assertEqual(summary["totals"]["missing_artifacts"], 6)
+        self.assertEqual(summary["totals"]["total_lines"], 3)
         self.assertEqual(artifacts["urls_sub.txt"]["lines"], 2)
         self.assertEqual(artifacts["ips_all.txt"]["lines"], 1)
         self.assertEqual(artifacts["ffuf_all.csv"]["exists"], False)
@@ -46,6 +49,8 @@ class OutputReportTest(unittest.TestCase):
 
         self.assertIn("OneDragon output summary", lines)
         self.assertIn("project=targets.txt", lines)
+        self.assertIn("present_artifacts=2", lines)
+        self.assertIn("total_lines=3", lines)
         self.assertTrue(any("urls_sub.txt: present" in line for line in lines))
         self.assertTrue(any("ffuf_all.csv: missing" in line for line in lines))
 
@@ -66,6 +71,7 @@ class OutputReportTest(unittest.TestCase):
 
         self.assertEqual(parsed["project"], "targets.txt")
         self.assertEqual(parsed["output_root"], self.output_root)
+        self.assertEqual(parsed["totals"]["total_lines"], 3)
         self.assertEqual(len(parsed["artifacts"]), 8)
 
     def test_write_output_summary_writes_json_summary_file(self):
