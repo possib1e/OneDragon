@@ -38,9 +38,29 @@ class OutputReportTest(unittest.TestCase):
         self.assertEqual(summary["totals"]["present_artifacts"], 2)
         self.assertEqual(summary["totals"]["missing_artifacts"], 6)
         self.assertEqual(summary["totals"]["total_lines"], 3)
+        self.assertEqual(summary["complete"], False)
+        self.assertIn("final-domains-ips.txt", summary["missing_artifact_names"])
+        self.assertIn("ffuf_redup.txt", summary["missing_artifact_names"])
         self.assertEqual(artifacts["urls_sub.txt"]["lines"], 2)
         self.assertEqual(artifacts["ips_all.txt"]["lines"], 1)
         self.assertEqual(artifacts["ffuf_all.csv"]["exists"], False)
+
+    def test_collect_output_summary_marks_complete_output(self):
+        for filename in (
+            "final-domains-ips.txt",
+            "urls_ip.txt",
+            "ip_port_scan_results.txt",
+            "urls_all.txt",
+            "ffuf_all.csv",
+            "ffuf_redup.txt",
+        ):
+            self.write_output(filename, "placeholder\n")
+
+        summary = collect_output_summary(self.project, self.output_root)
+
+        self.assertEqual(summary["complete"], True)
+        self.assertEqual(summary["missing_artifact_names"], [])
+        self.assertEqual(summary["totals"]["present_artifacts"], 8)
 
     def test_format_output_summary_includes_artifact_state(self):
         summary = collect_output_summary(self.project, self.output_root)
@@ -49,8 +69,12 @@ class OutputReportTest(unittest.TestCase):
 
         self.assertIn("OneDragon output summary", lines)
         self.assertIn("project=targets.txt", lines)
+        self.assertIn("complete=False", lines)
         self.assertIn("present_artifacts=2", lines)
         self.assertIn("total_lines=3", lines)
+        self.assertTrue(
+            any("missing_artifact_names=final-domains-ips.txt" in line for line in lines)
+        )
         self.assertTrue(any("urls_sub.txt: present" in line for line in lines))
         self.assertTrue(any("ffuf_all.csv: missing" in line for line in lines))
 
@@ -71,6 +95,8 @@ class OutputReportTest(unittest.TestCase):
 
         self.assertEqual(parsed["project"], "targets.txt")
         self.assertEqual(parsed["output_root"], self.output_root)
+        self.assertEqual(parsed["complete"], False)
+        self.assertIn("ffuf_all.csv", parsed["missing_artifact_names"])
         self.assertEqual(parsed["totals"]["total_lines"], 3)
         self.assertEqual(len(parsed["artifacts"]), 8)
 

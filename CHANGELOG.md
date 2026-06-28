@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-06-28
+
+- Added output completeness status to scanner-safe summaries.
+- Added missing artifact name lists to text and JSON summary output.
+- Added tests for incomplete and complete output summary states.
+- Updated reporting docs and roadmap for the completeness signal.
+
 ## 2026-06-19
 
 - Added report totals for present artifacts, missing artifacts, and total lines.

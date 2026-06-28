@@ -9,7 +9,8 @@ python3 start.py --summarize-output targets.txt
 ```
 
 The command reports whether each expected artifact exists, how many lines it
-contains, and totals for present artifacts, missing artifacts, and output lines.
+contains, whether the output set is complete, which artifact names are still
+missing, and totals for present artifacts, missing artifacts, and output lines.
 
 ## JSON Output
 
@@ -18,7 +19,8 @@ python3 start.py --summarize-output targets.txt --summary-format json
 ```
 
 Use JSON when another tool needs to consume the report. The JSON payload includes
-the same artifact entries and totals as the text output.
+the same artifact entries, completeness status, missing artifact names, and
+totals as the text output.
 
 ## Write a Summary File
 
