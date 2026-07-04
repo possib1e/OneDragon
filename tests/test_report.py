@@ -34,6 +34,7 @@ class OutputReportTest(unittest.TestCase):
         summary = collect_output_summary(self.project, self.output_root)
 
         artifacts = dict((item["name"], item) for item in summary["artifacts"])
+        self.assertEqual(summary["schema_version"], 1)
         self.assertEqual(summary["output_dir"], self.output_dir)
         self.assertEqual(summary["totals"]["present_artifacts"], 2)
         self.assertEqual(summary["totals"]["missing_artifacts"], 6)
@@ -68,6 +69,7 @@ class OutputReportTest(unittest.TestCase):
         lines = format_output_summary(summary)
 
         self.assertIn("OneDragon output summary", lines)
+        self.assertIn("schema_version=1", lines)
         self.assertIn("project=targets.txt", lines)
         self.assertIn("complete=False", lines)
         self.assertIn("present_artifacts=2", lines)
@@ -94,6 +96,7 @@ class OutputReportTest(unittest.TestCase):
         parsed = json.loads(format_output_summary_json(summary))
 
         self.assertEqual(parsed["project"], "targets.txt")
+        self.assertEqual(parsed["schema_version"], 1)
         self.assertEqual(parsed["output_root"], self.output_root)
         self.assertEqual(parsed["complete"], False)
         self.assertIn("ffuf_all.csv", parsed["missing_artifact_names"])

@@ -20,7 +20,8 @@ python3 start.py --summarize-output targets.txt --summary-format json
 
 Use JSON when another tool needs to consume the report. The JSON payload includes
 the same artifact entries, completeness status, missing artifact names, and
-totals as the text output.
+totals as the text output. See [Output Summary Schema](report-schema.md) for the
+stable field contract.
 
 ## Write a Summary File
 

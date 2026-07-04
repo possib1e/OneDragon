@@ -13,6 +13,7 @@ OUTPUT_ARTIFACTS = (
     ("ffuf_all.csv", "Raw ffuf CSV output"),
     ("ffuf_redup.txt", "Deduplicated ffuf findings"),
 )
+REPORT_SCHEMA_VERSION = 1
 
 
 def _validate_project_name(project):
@@ -51,6 +52,7 @@ def collect_output_summary(project, output_root="output"):
     total_lines = sum(artifact["lines"] for artifact in artifacts)
 
     return {
+        "schema_version": REPORT_SCHEMA_VERSION,
         "project": project,
         "output_root": output_root,
         "output_dir": output_dir,
@@ -69,6 +71,7 @@ def collect_output_summary(project, output_root="output"):
 def format_output_summary(summary):
     lines = [
         "OneDragon output summary",
+        "schema_version={}".format(summary["schema_version"]),
         "project={}".format(summary["project"]),
         "output_dir={}".format(summary["output_dir"]),
         "output_exists={}".format(summary["output_exists"]),

@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-07-04
+
+- Added `schema_version` to scanner-safe output summaries.
+- Documented the output summary schema for downstream JSON consumers.
+- Added tests for schema version presence in collected, text, and JSON summaries.
+- Updated reporting docs and roadmap for the versioned schema note.
+
 ## 2026-06-28
 
 - Added output completeness status to scanner-safe summaries.
