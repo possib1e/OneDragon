@@ -61,6 +61,21 @@ class StartCliTest(unittest.TestCase):
         self.assertEqual(parsed["project"], "missing-output.txt")
         self.assertEqual(parsed["output_exists"], False)
 
+    def test_summarize_output_can_emit_markdown(self):
+        code, output = self.run_main(
+            [
+                "--summarize-output",
+                "missing-output.txt",
+                "--summary-format",
+                "markdown",
+            ]
+        )
+
+        self.assertEqual(code, 0)
+        self.assertIn("# OneDragon Output Summary", output)
+        self.assertIn("| Artifact | State | Lines | Description |", output)
+        self.assertIn("| final-domains-ips.txt | missing | 0 |", output)
+
 
 if __name__ == "__main__":
     unittest.main()

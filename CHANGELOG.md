@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-07-06
+
+- Added Markdown output support for scanner-safe output summaries.
+- Added report and CLI tests for `--summary-format markdown`.
+- Documented Markdown summary usage for issues, pull requests, and release notes.
+- Updated the report schema notes to cover text, JSON, and Markdown payloads.
+
 ## 2026-07-04
 
 - Added `schema_version` to scanner-safe output summaries.

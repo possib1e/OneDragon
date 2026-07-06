@@ -8,6 +8,7 @@ from module.report import (
     collect_output_summary,
     format_output_summary,
     format_output_summary_json,
+    format_output_summary_markdown,
     write_output_summary,
 )
 
@@ -103,6 +104,17 @@ class OutputReportTest(unittest.TestCase):
         self.assertEqual(parsed["totals"]["total_lines"], 3)
         self.assertEqual(len(parsed["artifacts"]), 8)
 
+    def test_format_output_summary_markdown_returns_review_table(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        lines = format_output_summary_markdown(summary)
+
+        self.assertIn("# OneDragon Output Summary", lines)
+        self.assertIn("- Schema version: 1", lines)
+        self.assertIn("| Artifact | State | Lines | Description |", lines)
+        self.assertTrue(any("| urls_sub.txt | present | 2 |" in line for line in lines))
+        self.assertTrue(any("| ffuf_all.csv | missing | 0 |" in line for line in lines))
+
     def test_write_output_summary_writes_json_summary_file(self):
         summary = collect_output_summary(self.project, self.output_root)
 
@@ -111,6 +123,16 @@ class OutputReportTest(unittest.TestCase):
         with open(summary_path, "r") as summary_file:
             parsed = json.loads(summary_file.read())
         self.assertEqual(parsed["project"], "targets.txt")
+
+    def test_write_output_summary_writes_markdown_summary_file(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        summary_path = write_output_summary(summary, "summary.md", "markdown")
+
+        with open(summary_path, "r") as summary_file:
+            content = summary_file.read()
+        self.assertIn("# OneDragon Output Summary", content)
+        self.assertIn("| urls_sub.txt | present | 2 |", content)
 
     def test_collect_output_summary_rejects_nested_project_path(self):
         with self.assertRaises(ValueError) as error:

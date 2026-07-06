@@ -23,6 +23,16 @@ the same artifact entries, completeness status, missing artifact names, and
 totals as the text output. See [Output Summary Schema](report-schema.md) for the
 stable field contract.
 
+## Markdown Output
+
+```bash
+python3 start.py --summarize-output targets.txt --summary-format markdown
+```
+
+Use Markdown when the summary needs to be pasted into an issue, pull request, or
+release note. The Markdown output includes the same totals and artifact states
+as the text output, plus a table for review.
+
 ## Write a Summary File
 
 ```bash

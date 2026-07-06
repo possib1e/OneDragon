@@ -43,7 +43,7 @@ def parse_args(argv=None):
     )
     parser.add_argument(
         "--summary-format",
-        choices=("text", "json"),
+        choices=("text", "json", "markdown"),
         default="text",
         help="Output format for --summarize-output.",
     )
@@ -95,6 +95,7 @@ def main(argv=None):
             collect_output_summary,
             format_output_summary,
             format_output_summary_json,
+            format_output_summary_markdown,
             write_output_summary,
         )
 
@@ -102,6 +103,9 @@ def main(argv=None):
             summary = collect_output_summary(filename, output_root)
             if args.summary_format == "json":
                 print(format_output_summary_json(summary))
+            elif args.summary_format == "markdown":
+                for line in format_output_summary_markdown(summary):
+                    print(line)
             else:
                 for line in format_output_summary(summary):
                     print(line)

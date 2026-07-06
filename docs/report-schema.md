@@ -6,8 +6,8 @@ targets.
 
 ## Version
 
-`schema_version` identifies the shape of the text and JSON summary payload.
-Version `1` includes the fields documented below.
+`schema_version` identifies the shape of the text, JSON, and Markdown summary
+payloads. Version `1` includes the fields documented below.
 
 Schema changes should be additive where possible. Increment `schema_version`
 when a future change removes or renames a field, changes a field type, or
@@ -44,3 +44,5 @@ python3 start.py --summarize-output targets.txt --summary-format json
 ```
 
 Consumers should tolerate additional fields in future schema versions.
+Markdown output is intended for human review in issues, pull requests, and
+release notes rather than machine parsing.

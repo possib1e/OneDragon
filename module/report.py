@@ -101,6 +101,38 @@ def format_output_summary_json(summary):
     return json.dumps(summary, indent=2, sort_keys=True)
 
 
+def format_output_summary_markdown(summary):
+    lines = [
+        "# OneDragon Output Summary",
+        "",
+        "- Schema version: {}".format(summary["schema_version"]),
+        "- Project: `{}`".format(summary["project"]),
+        "- Output directory: `{}`".format(summary["output_dir"]),
+        "- Output exists: {}".format(summary["output_exists"]),
+        "- Complete: {}".format(summary["complete"]),
+        "- Present artifacts: {}".format(summary["totals"]["present_artifacts"]),
+        "- Missing artifacts: {}".format(summary["totals"]["missing_artifacts"]),
+        "- Total lines: {}".format(summary["totals"]["total_lines"]),
+        "- Missing artifact names: {}".format(
+            ", ".join(summary["missing_artifact_names"]) or "none"
+        ),
+        "",
+        "| Artifact | State | Lines | Description |",
+        "| --- | --- | ---: | --- |",
+    ]
+    for artifact in summary["artifacts"]:
+        state = "present" if artifact["exists"] else "missing"
+        lines.append(
+            "| {name} | {state} | {lines} | {description} |".format(
+                name=artifact["name"],
+                state=state,
+                lines=artifact["lines"],
+                description=artifact["description"],
+            )
+        )
+    return lines
+
+
 def write_output_summary(summary, filename="summary.txt", summary_format="text"):
     if not summary["output_exists"]:
         raise ValueError(
@@ -110,6 +142,8 @@ def write_output_summary(summary, filename="summary.txt", summary_format="text")
     with open(summary_path, "w") as output_file:
         if summary_format == "json":
             output_file.write(format_output_summary_json(summary))
+        elif summary_format == "markdown":
+            output_file.write("\n".join(format_output_summary_markdown(summary)))
         else:
             output_file.write("\n".join(format_output_summary(summary)))
         output_file.write("\n")
