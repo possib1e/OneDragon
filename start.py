@@ -44,8 +44,8 @@ def parse_args(argv=None):
     parser.add_argument(
         "--summary-format",
         choices=("text", "json", "markdown"),
-        default="text",
-        help="Output format for --summarize-output.",
+        default=None,
+        help="Output format for --summarize-output. Defaults to reports.summary_format or text.",
     )
     return parser.parse_args(argv)
 
@@ -91,6 +91,9 @@ def main(argv=None):
         summary_filename = get_config_value(
             config, "reports", "summary_filename", "summary.txt"
         )
+        summary_format = args.summary_format or get_config_value(
+            config, "reports", "summary_format", "text"
+        )
         from module.report import (
             collect_output_summary,
             format_output_summary,
@@ -101,9 +104,9 @@ def main(argv=None):
 
         try:
             summary = collect_output_summary(filename, output_root)
-            if args.summary_format == "json":
+            if summary_format == "json":
                 print(format_output_summary_json(summary))
-            elif args.summary_format == "markdown":
+            elif summary_format == "markdown":
                 for line in format_output_summary_markdown(summary):
                     print(line)
             else:
@@ -113,7 +116,7 @@ def main(argv=None):
                 print(
                     "Wrote summary: {}".format(
                         write_output_summary(
-                            summary, summary_filename, args.summary_format
+                            summary, summary_filename, summary_format
                         )
                     )
                 )

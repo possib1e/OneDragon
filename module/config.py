@@ -16,7 +16,15 @@ SUPPORTED_KEYS = {
         "ffuf_max_time_seconds",
         "massdns_wildcard_threshold",
     ),
-    "reports": ("keep_raw_outputs", "generate_summary", "summary_filename"),
+    "reports": (
+        "keep_raw_outputs",
+        "generate_summary",
+        "summary_filename",
+        "summary_format",
+    ),
+}
+SUPPORTED_VALUES = {
+    ("reports", "summary_format"): ("text", "json", "markdown"),
 }
 MISSING = object()
 SUMMARY_KEYS = (
@@ -27,6 +35,7 @@ SUMMARY_KEYS = (
     ("scan", "massdns_wildcard_threshold"),
     ("reports", "generate_summary"),
     ("reports", "summary_filename"),
+    ("reports", "summary_format"),
 )
 
 
@@ -74,7 +83,15 @@ def load_config(config_path):
                             current_section, key
                         )
                     )
-                values[current_section][key] = _coerce_value(raw_value.strip())
+                value = _coerce_value(raw_value.strip())
+                supported_values = SUPPORTED_VALUES.get((current_section, key))
+                if supported_values and value not in supported_values:
+                    raise ValueError(
+                        "unsupported config value for {}.{}: {}".format(
+                            current_section, key, value
+                        )
+                    )
+                values[current_section][key] = value
 
     missing = [section for section in REQUIRED_SECTIONS if section not in sections]
     if missing:

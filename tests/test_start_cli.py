@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import os
 import sys
 import unittest
 
@@ -12,6 +13,23 @@ from start import main
 
 
 class StartCliTest(unittest.TestCase):
+    def tearDown(self):
+        if os.path.exists("tmp-summary-format-config.yaml"):
+            os.remove("tmp-summary-format-config.yaml")
+
+    def write_config(self, summary_format):
+        with open("tmp-summary-format-config.yaml", "w") as config_file:
+            config_file.write(
+                "scope:\n"
+                "  targets_file: targets.txt\n"
+                "paths:\n"
+                "  output_root: output\n"
+                "scan:\n"
+                "  ffuf_timeout_seconds: 60\n"
+                "reports:\n"
+                "  summary_format: {}\n".format(summary_format)
+            )
+
     def run_main(self, args):
         original_stdout = sys.stdout
         sys.stdout = StringIO()
@@ -75,6 +93,40 @@ class StartCliTest(unittest.TestCase):
         self.assertIn("# OneDragon Output Summary", output)
         self.assertIn("| Artifact | State | Lines | Description |", output)
         self.assertIn("| final-domains-ips.txt | missing | 0 |", output)
+
+    def test_summarize_output_uses_configured_summary_format(self):
+        self.write_config("markdown")
+
+        code, output = self.run_main(
+            [
+                "--config",
+                "tmp-summary-format-config.yaml",
+                "--summarize-output",
+                "missing-output.txt",
+            ]
+        )
+
+        self.assertEqual(code, 0)
+        self.assertIn("# OneDragon Output Summary", output)
+        self.assertIn("| Artifact | State | Lines | Description |", output)
+
+    def test_summarize_output_cli_format_overrides_configured_format(self):
+        self.write_config("markdown")
+
+        code, output = self.run_main(
+            [
+                "--config",
+                "tmp-summary-format-config.yaml",
+                "--summarize-output",
+                "missing-output.txt",
+                "--summary-format",
+                "json",
+            ]
+        )
+
+        self.assertEqual(code, 0)
+        parsed = json.loads(output)
+        self.assertEqual(parsed["project"], "missing-output.txt")
 
 
 if __name__ == "__main__":

@@ -41,6 +41,10 @@ python3 start.py --summarize-output targets.txt --write-summary
 
 By default this writes `summary.txt` under the matching output directory. The filename is controlled by `reports.summary_filename` in `config.example.yaml`. The file content follows `--summary-format`.
 
+When `--summary-format` is omitted, `reports.summary_format` can provide the
+default output format. The command-line option takes precedence over the config
+value.
+
 ## Expected Artifacts
 
 - `final-domains-ips.txt`

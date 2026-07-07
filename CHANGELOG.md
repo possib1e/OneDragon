@@ -2,6 +2,14 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-07-07
+
+- Added `reports.summary_format` to the supported config surface.
+- Allowed `--summarize-output` to use the configured summary format when the CLI format is omitted.
+- Added validation for supported summary formats: `text`, `json`, and `markdown`.
+- Added config and CLI tests for configured summary format defaults and command-line overrides.
+- Updated configuration, reporting, and roadmap docs for the new report setting.
+
 ## 2026-07-06
 
 - Added Markdown output support for scanner-safe output summaries.

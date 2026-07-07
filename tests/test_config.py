@@ -15,6 +15,7 @@ class ConfigLoaderTest(unittest.TestCase):
     def tearDown(self):
         for filename in (
             "tmp-invalid-config.yaml",
+            "tmp-invalid-summary-format.yaml",
             "tmp-unsupported-key.yaml",
             "tmp-unsupported-section.yaml",
         ):
@@ -41,6 +42,7 @@ class ConfigLoaderTest(unittest.TestCase):
         self.assertEqual(result["values"]["scope"]["authorized_only"], True)
         self.assertEqual(result["values"]["scan"]["ffuf_timeout_seconds"], 60)
         self.assertEqual(result["values"]["reports"]["generate_summary"], False)
+        self.assertEqual(result["values"]["reports"]["summary_format"], "text")
 
     def test_get_config_value_returns_existing_value(self):
         result = load_config("config.example.yaml")
@@ -79,13 +81,17 @@ class ConfigLoaderTest(unittest.TestCase):
         self.assertIn("scan.ffuf_timeout_seconds=60", summary)
         self.assertIn("reports.generate_summary=False", summary)
         self.assertIn("reports.summary_filename=summary.txt", summary)
+        self.assertIn("reports.summary_format=text", summary)
 
     def test_list_supported_config_returns_sections_and_keys(self):
         supported = list_supported_config()
 
         self.assertIn("scope: targets_file, authorized_only", supported)
         self.assertIn("paths: output_root, oneforall_root, ffuf_wordlist, massdns_resolvers", supported)
-        self.assertIn("reports: keep_raw_outputs, generate_summary, summary_filename", supported)
+        self.assertIn(
+            "reports: keep_raw_outputs, generate_summary, summary_filename, summary_format",
+            supported,
+        )
 
     def test_missing_config_file_raises_error(self):
         with self.assertRaises(ValueError) as error:
@@ -140,6 +146,25 @@ class ConfigLoaderTest(unittest.TestCase):
 
         self.assertIn("unsupported config value", str(error.exception))
         self.assertIn("scan.unknown_timeout", str(error.exception))
+
+    def test_unsupported_summary_format_raises_error(self):
+        self.write_config(
+            "tmp-invalid-summary-format.yaml",
+            "scope:\n"
+            "  targets_file: targets.txt\n"
+            "paths:\n"
+            "  output_root: output\n"
+            "scan:\n"
+            "  ffuf_timeout_seconds: 60\n"
+            "reports:\n"
+            "  summary_format: xml\n",
+        )
+
+        with self.assertRaises(ValueError) as error:
+            load_config("tmp-invalid-summary-format.yaml")
+
+        self.assertIn("reports.summary_format", str(error.exception))
+        self.assertIn("xml", str(error.exception))
 
 
 if __name__ == "__main__":

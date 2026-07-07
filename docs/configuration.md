@@ -53,6 +53,9 @@ The check prints a short summary of key parsed values so maintainers can confirm
 The same check also prints the supported config sections and keys. This keeps the accepted configuration surface visible without duplicating the list by hand in multiple documents.
 
 `reports.summary_filename` controls the filename used by `--summarize-output --write-summary`.
+`reports.summary_format` controls the default summary format when
+`--summary-format` is not provided. Supported values are `text`, `json`, and
+`markdown`.
 
 ## Test Coverage
 
