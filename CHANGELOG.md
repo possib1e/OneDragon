@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-07-08
+
+- Added validation for written output summary filenames.
+- Restricted summary filenames to the inspected output directory.
+- Added report and CLI tests for nested summary filename rejection.
+- Updated configuration, reporting, and roadmap docs for the summary filename boundary.
+
 ## 2026-07-07
 
 - Added `reports.summary_format` to the supported config surface.

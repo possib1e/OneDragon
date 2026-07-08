@@ -17,18 +17,22 @@ class StartCliTest(unittest.TestCase):
         if os.path.exists("tmp-summary-format-config.yaml"):
             os.remove("tmp-summary-format-config.yaml")
 
-    def write_config(self, summary_format):
+    def write_config(self, summary_format, summary_filename=None):
+        lines = [
+            "scope:",
+            "  targets_file: targets.txt",
+            "paths:",
+            "  output_root: output",
+            "scan:",
+            "  ffuf_timeout_seconds: 60",
+            "reports:",
+        ]
+        if summary_filename is not None:
+            lines.append("  summary_filename: {}".format(summary_filename))
+        lines.append("  summary_format: {}".format(summary_format))
         with open("tmp-summary-format-config.yaml", "w") as config_file:
-            config_file.write(
-                "scope:\n"
-                "  targets_file: targets.txt\n"
-                "paths:\n"
-                "  output_root: output\n"
-                "scan:\n"
-                "  ffuf_timeout_seconds: 60\n"
-                "reports:\n"
-                "  summary_format: {}\n".format(summary_format)
-            )
+            config_file.write("\n".join(lines))
+            config_file.write("\n")
 
     def run_main(self, args):
         original_stdout = sys.stdout
@@ -127,6 +131,22 @@ class StartCliTest(unittest.TestCase):
         self.assertEqual(code, 0)
         parsed = json.loads(output)
         self.assertEqual(parsed["project"], "missing-output.txt")
+
+    def test_write_summary_rejects_configured_nested_summary_filename(self):
+        self.write_config("text", os.path.join("nested", "summary.txt"))
+
+        code, output = self.run_main(
+            [
+                "--config",
+                "tmp-summary-format-config.yaml",
+                "--summarize-output",
+                "missing-output.txt",
+                "--write-summary",
+            ]
+        )
+
+        self.assertEqual(code, 1)
+        self.assertIn("summary filename", output)
 
 
 if __name__ == "__main__":

@@ -134,6 +134,22 @@ class OutputReportTest(unittest.TestCase):
         self.assertIn("# OneDragon Output Summary", content)
         self.assertIn("| urls_sub.txt | present | 2 |", content)
 
+    def test_write_output_summary_rejects_nested_summary_filename(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        with self.assertRaises(ValueError) as error:
+            write_output_summary(summary, os.path.join("nested", "summary.txt"))
+
+        self.assertIn("output directory", str(error.exception))
+
+    def test_write_output_summary_rejects_empty_summary_filename(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        with self.assertRaises(ValueError) as error:
+            write_output_summary(summary, " ")
+
+        self.assertIn("summary filename", str(error.exception))
+
     def test_collect_output_summary_rejects_nested_project_path(self):
         with self.assertRaises(ValueError) as error:
             collect_output_summary(

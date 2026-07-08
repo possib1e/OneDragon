@@ -21,6 +21,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 - Add a versioned schema note for scanner-safe output summaries.
 - Add Markdown output for review-friendly summaries.
 - Allow config to set the default scanner-safe summary format.
+- Keep written summary filenames inside the inspected output directory.
 - Keep generated scan outputs out of version control.
 - Document bundled tool directories and generated runtime artifacts.
 - Improve CLI help and target-file validation.
@@ -40,6 +41,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 - Add report schema notes for downstream tooling integrations.
 - Add compatibility examples for tools that consume JSON summaries.
 - Wire additional validated report settings into scanner-safe maintenance paths.
+- Expand path-boundary tests before writing additional report artifacts.
 
 ## Release Goals
 

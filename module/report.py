@@ -23,6 +23,13 @@ def _validate_project_name(project):
         raise ValueError("targets file must be in the project root directory")
 
 
+def _validate_summary_filename(filename):
+    if not filename or not filename.strip():
+        raise ValueError("summary filename is required")
+    if os.path.basename(filename) != filename:
+        raise ValueError("summary filename must stay in the output directory")
+
+
 def _count_lines(filepath):
     with open(filepath, "r") as input_file:
         return sum(1 for _line in input_file)
@@ -134,6 +141,7 @@ def format_output_summary_markdown(summary):
 
 
 def write_output_summary(summary, filename="summary.txt", summary_format="text"):
+    _validate_summary_filename(filename)
     if not summary["output_exists"]:
         raise ValueError(
             "output directory does not exist: {}".format(summary["output_dir"])
