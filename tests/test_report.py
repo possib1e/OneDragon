@@ -9,6 +9,7 @@ from module.report import (
     format_output_summary,
     format_output_summary_json,
     format_output_summary_markdown,
+    render_output_summary,
     write_output_summary,
 )
 
@@ -115,6 +116,25 @@ class OutputReportTest(unittest.TestCase):
         self.assertTrue(any("| urls_sub.txt | present | 2 |" in line for line in lines))
         self.assertTrue(any("| ffuf_all.csv | missing | 0 |" in line for line in lines))
 
+    def test_render_output_summary_supports_text_json_and_markdown(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        text_output = render_output_summary(summary, "text")
+        json_output = render_output_summary(summary, "json")
+        markdown_output = render_output_summary(summary, "markdown")
+
+        self.assertIn("OneDragon output summary", text_output)
+        self.assertEqual(json.loads(json_output)["project"], "targets.txt")
+        self.assertIn("# OneDragon Output Summary", markdown_output)
+
+    def test_render_output_summary_rejects_unsupported_format(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        with self.assertRaises(ValueError) as error:
+            render_output_summary(summary, "xml")
+
+        self.assertIn("unsupported summary format", str(error.exception))
+
     def test_write_output_summary_writes_json_summary_file(self):
         summary = collect_output_summary(self.project, self.output_root)
 
@@ -133,6 +153,14 @@ class OutputReportTest(unittest.TestCase):
             content = summary_file.read()
         self.assertIn("# OneDragon Output Summary", content)
         self.assertIn("| urls_sub.txt | present | 2 |", content)
+
+    def test_write_output_summary_rejects_unsupported_summary_format(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        with self.assertRaises(ValueError) as error:
+            write_output_summary(summary, "summary.xml", "xml")
+
+        self.assertIn("unsupported summary format", str(error.exception))
 
     def test_write_output_summary_rejects_nested_summary_filename(self):
         summary = collect_output_summary(self.project, self.output_root)

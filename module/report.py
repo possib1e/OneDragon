@@ -14,6 +14,7 @@ OUTPUT_ARTIFACTS = (
     ("ffuf_redup.txt", "Deduplicated ffuf findings"),
 )
 REPORT_SCHEMA_VERSION = 1
+SUPPORTED_SUMMARY_FORMATS = ("text", "json", "markdown")
 
 
 def _validate_project_name(project):
@@ -140,6 +141,16 @@ def format_output_summary_markdown(summary):
     return lines
 
 
+def render_output_summary(summary, summary_format="text"):
+    if summary_format == "json":
+        return format_output_summary_json(summary)
+    if summary_format == "markdown":
+        return "\n".join(format_output_summary_markdown(summary))
+    if summary_format == "text":
+        return "\n".join(format_output_summary(summary))
+    raise ValueError("unsupported summary format: {}".format(summary_format))
+
+
 def write_output_summary(summary, filename="summary.txt", summary_format="text"):
     _validate_summary_filename(filename)
     if not summary["output_exists"]:
@@ -148,11 +159,6 @@ def write_output_summary(summary, filename="summary.txt", summary_format="text")
         )
     summary_path = os.path.join(summary["output_dir"], filename)
     with open(summary_path, "w") as output_file:
-        if summary_format == "json":
-            output_file.write(format_output_summary_json(summary))
-        elif summary_format == "markdown":
-            output_file.write("\n".join(format_output_summary_markdown(summary)))
-        else:
-            output_file.write("\n".join(format_output_summary(summary)))
+        output_file.write(render_output_summary(summary, summary_format))
         output_file.write("\n")
     return summary_path

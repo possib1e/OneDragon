@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
 
+from module.report import SUPPORTED_SUMMARY_FORMATS
+
 
 REQUIRED_SECTIONS = ("scope", "paths", "scan", "reports")
 SUPPORTED_KEYS = {
@@ -24,7 +26,7 @@ SUPPORTED_KEYS = {
     ),
 }
 SUPPORTED_VALUES = {
-    ("reports", "summary_format"): ("text", "json", "markdown"),
+    ("reports", "summary_format"): SUPPORTED_SUMMARY_FORMATS,
 }
 MISSING = object()
 SUMMARY_KEYS = (

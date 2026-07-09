@@ -9,6 +9,7 @@ from module.config import (
     summarize_config,
 )
 from module.common import rm_output_file
+from module.report import SUPPORTED_SUMMARY_FORMATS
 #python3 start.py targets.txt
 
 
@@ -43,7 +44,7 @@ def parse_args(argv=None):
     )
     parser.add_argument(
         "--summary-format",
-        choices=("text", "json", "markdown"),
+        choices=SUPPORTED_SUMMARY_FORMATS,
         default=None,
         help="Output format for --summarize-output. Defaults to reports.summary_format or text.",
     )
@@ -96,22 +97,13 @@ def main(argv=None):
         )
         from module.report import (
             collect_output_summary,
-            format_output_summary,
-            format_output_summary_json,
-            format_output_summary_markdown,
+            render_output_summary,
             write_output_summary,
         )
 
         try:
             summary = collect_output_summary(filename, output_root)
-            if summary_format == "json":
-                print(format_output_summary_json(summary))
-            elif summary_format == "markdown":
-                for line in format_output_summary_markdown(summary):
-                    print(line)
-            else:
-                for line in format_output_summary(summary):
-                    print(line)
+            print(render_output_summary(summary, summary_format))
             if args.write_summary:
                 print(
                     "Wrote summary: {}".format(

@@ -2,6 +2,14 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-07-09
+
+- Added a shared `render_output_summary()` helper for text, JSON, and Markdown summaries.
+- Reused the same summary format list for CLI choices and config validation.
+- Routed CLI printing and written summary files through the shared renderer.
+- Added tests for shared rendering and unsupported summary format rejection.
+- Updated report schema notes and roadmap for centralized format handling.
+
 ## 2026-07-08
 
 - Added validation for written output summary filenames.

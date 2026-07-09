@@ -46,3 +46,5 @@ python3 start.py --summarize-output targets.txt --summary-format json
 Consumers should tolerate additional fields in future schema versions.
 Markdown output is intended for human review in issues, pull requests, and
 release notes rather than machine parsing.
+The supported summary formats are rendered through the same report module path
+so CLI output and written summary files stay consistent.
