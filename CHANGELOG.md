@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-07-10
+
+- Extended maintenance CI to compile the test suite.
+- Added scanner-safe CI smoke checks for JSON and Markdown output summaries.
+- Kept CI checks limited to local validation and summary rendering, without running scanners.
+- Updated the roadmap for summary-format CI coverage.
+
 ## 2026-07-09
 
 - Added a shared `render_output_summary()` helper for text, JSON, and Markdown summaries.
