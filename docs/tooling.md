@@ -16,6 +16,7 @@ OneDragon keeps a legacy integrated scanner workflow in one repository. This pag
 - `config.example.yaml`: planned configuration surface for paths, timeouts, output directories, and report settings.
 - `docs/installation.md`: runtime and external tool setup notes.
 - `docs/configuration.md`: configuration migration plan.
+- `docs/ci.md`: scanner-safe maintenance CI boundary and local equivalent checks.
 - `docs/roadmap.md`: maintenance roadmap.
 - `SECURITY.md`: responsible-use and vulnerability reporting guidance.
 - `CONTRIBUTING.md`: contribution expectations and lightweight verification steps.
@@ -46,4 +47,4 @@ Generated files should stay out of git unless they are tiny examples used for do
 - Treat changes under `module/`, `start.py`, and documentation as OneDragon-maintained code.
 - Treat changes under vendored scanner directories as higher-risk because they may affect upstream tool behavior.
 - Prefer documenting assumptions before changing scanner command strings.
-- Keep CI checks scanner-safe: syntax, help output, docs, and config validation are safe; live scans belong in isolated authorized environments.
+- Keep CI checks scanner-safe: syntax, help output, config validation, unit tests, and local summary rendering are safe; live scans belong in isolated authorized environments.

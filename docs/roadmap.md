@@ -24,6 +24,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 - Keep written summary filenames inside the inspected output directory.
 - Centralize scanner-safe summary format rendering and validation.
 - Cover scanner-safe summary formats in maintenance CI.
+- Document scanner-safe CI boundaries and local equivalent checks.
 - Keep generated scan outputs out of version control.
 - Document bundled tool directories and generated runtime artifacts.
 - Improve CLI help and target-file validation.
@@ -46,6 +47,7 @@ This roadmap tracks maintenance work that makes OneDragon easier to review, run,
 - Expand path-boundary tests before writing additional report artifacts.
 - Keep CLI and file writers on shared formatter helpers as report formats grow.
 - Add CI assertions for each new scanner-safe report format.
+- Keep installation verification commands aligned with maintenance CI.
 
 ## Release Goals
 

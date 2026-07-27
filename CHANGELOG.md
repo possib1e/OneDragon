@@ -2,6 +2,13 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-07-27
+
+- Added `docs/ci.md` to document scanner-safe maintenance CI checks.
+- Documented the local equivalent command set for CI validation.
+- Linked CI guidance from tooling and installation docs.
+- Updated the roadmap for CI boundary documentation.
+
 ## 2026-07-10
 
 - Extended maintenance CI to compile the test suite.

@@ -33,10 +33,17 @@ See `docs/tooling.md` for the distinction between bundled tools, examples, and g
 
 ## Verification
 
-Use a syntax check before changing the workflow:
+Use scanner-safe checks before changing the workflow:
 
 ```bash
-python3 -m compileall start.py module
+python3 -m compileall start.py module tests
+python3 start.py --help
+python3 start.py --config config.example.yaml --check-config
+python3 start.py --summarize-output targets.txt --summary-format json
+python3 start.py --summarize-output targets.txt --summary-format markdown
+python3 -m unittest discover -s tests
 ```
+
+These checks match the maintenance CI described in `docs/ci.md`.
 
 For scanner behavior changes, use a small internal test domain first and inspect files under `output/<targets-file>/`.
