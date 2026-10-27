@@ -162,6 +162,24 @@ class OutputReportTest(unittest.TestCase):
 
         self.assertIn("unsupported summary format", str(error.exception))
 
+    def test_invalid_format_preserves_existing_summary(self):
+        self.write_output("summary.txt", "previous report\n")
+        summary = collect_output_summary(self.project, self.output_root)
+
+        with self.assertRaises(ValueError):
+            write_output_summary(summary, "summary.txt", "xml")
+
+        with open(os.path.join(self.output_dir, "summary.txt"), "r") as report:
+            self.assertEqual(report.read(), "previous report\n")
+
+    def test_invalid_format_does_not_create_summary_file(self):
+        summary = collect_output_summary(self.project, self.output_root)
+
+        with self.assertRaises(ValueError):
+            write_output_summary(summary, "summary.xml", "xml")
+
+        self.assertFalse(os.path.exists(os.path.join(self.output_dir, "summary.xml")))
+
     def test_write_output_summary_rejects_nested_summary_filename(self):
         summary = collect_output_summary(self.project, self.output_root)
 

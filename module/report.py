@@ -157,8 +157,9 @@ def write_output_summary(summary, filename="summary.txt", summary_format="text")
         raise ValueError(
             "output directory does not exist: {}".format(summary["output_dir"])
         )
+    content = render_output_summary(summary, summary_format)
     summary_path = os.path.join(summary["output_dir"], filename)
     with open(summary_path, "w") as output_file:
-        output_file.write(render_output_summary(summary, summary_format))
+        output_file.write(content)
         output_file.write("\n")
     return summary_path

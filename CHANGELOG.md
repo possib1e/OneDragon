@@ -2,6 +2,12 @@
 
 All notable project maintenance changes are tracked here.
 
+## 2026-10-27
+
+- Render and validate summary content before opening the destination file.
+- Preserve existing reports and avoid creating empty files when the summary format is unsupported.
+- Added regression tests for both failure cases.
+
 ## 2026-07-27
 
 - Added `docs/ci.md` to document scanner-safe maintenance CI checks.
